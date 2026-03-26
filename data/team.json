@@ -1,0 +1,10 @@
+{
+  "nodes": [
+    {"id":"steve","name":"Dr. Steve Chase, MD","title":"CEO / ENT Surgeon","role":"founder","reports":["sage"]},
+    {"id":"sage","name":"Sage","title":"AI Chief of Staff","role":"ai","reports":["snotdoc-pod","aiattending-pod","books-pod","systems-pod"]},
+    {"id":"snotdoc-pod","name":"SnotDoc Pod","title":"Content & Brand","role":"pod","reports":[]},
+    {"id":"aiattending-pod","name":"AI Attending Pod","title":"Media & Podcast","role":"pod","reports":[]},
+    {"id":"books-pod","name":"Books Pod","title":"Publishing","role":"pod","reports":[]},
+    {"id":"systems-pod","name":"Systems Pod","title":"Ops & Tech","role":"pod","reports":[]}
+  ]
+}

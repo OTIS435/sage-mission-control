@@ -1,0 +1,12 @@
+[
+  {"id":"t1","title":"Launch SnotDoc Instagram","description":"Set up Instagram profile with first 3 posts","status":"done","project":"SnotDoc","priority":"high","createdAt":"2026-03-01"},
+  {"id":"t2","title":"Write AI Attending pilot episode","description":"Script and record first episode on AI tools for physicians","status":"done","project":"The AI Attending","priority":"high","createdAt":"2026-03-05"},
+  {"id":"t3","title":"Publish ENT Patient Guide: Sinusitis","description":"Create PDF guide on sinusitis for Gumroad","status":"in-progress","project":"ENT Patient Guides","priority":"medium","createdAt":"2026-03-10"},
+  {"id":"t4","title":"Mission Control auth system","description":"Build passphrase-protected dashboard","status":"done","project":"Mission Control","priority":"high","createdAt":"2026-03-12"},
+  {"id":"t5","title":"SnotDoc blog — 5 SEO articles","description":"Write 5 SEO-optimized articles on ENT topics","status":"in-progress","project":"SnotDoc","priority":"medium","createdAt":"2026-03-14"},
+  {"id":"t6","title":"Daily Standard — Chapter 3 draft","description":"Complete chapter 3 of book manuscript","status":"in-progress","project":"The Daily Standard","priority":"medium","createdAt":"2026-03-15"},
+  {"id":"t7","title":"Coloring book — 10 page designs","description":"Design first 10 pages of kids coloring book","status":"backlog","project":"SnotDoc Kids Coloring Book","priority":"low","createdAt":"2026-03-16"},
+  {"id":"t8","title":"Set up Gumroad storefront","description":"Create professional Gumroad profile and first product listing","status":"backlog","project":"ENT Patient Guides","priority":"medium","createdAt":"2026-03-17"},
+  {"id":"t9","title":"AI Attending podcast RSS feed","description":"Set up podcast RSS and submit to Apple, Spotify","status":"backlog","project":"The AI Attending","priority":"high","createdAt":"2026-03-18"},
+  {"id":"t10","title":"Security audit — Mission Control","description":"Review auth, API routes, and data exposure","status":"backlog","project":"Mission Control","priority":"high","createdAt":"2026-03-20"}
+]

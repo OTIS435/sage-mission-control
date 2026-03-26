@@ -1,0 +1,29 @@
+[
+  {
+    "id":"scan-001",
+    "timestamp":"2026-03-25T04:00:00Z",
+    "status":"clean",
+    "duration":"1.2s",
+    "findings":0,
+    "details":"No vulnerabilities detected. Auth middleware healthy. API routes secured. Environment variables validated.",
+    "checkedPaths":["/api/*","/auth/*","/.env.local"]
+  },
+  {
+    "id":"scan-002",
+    "timestamp":"2026-03-24T20:00:00Z",
+    "status":"clean",
+    "duration":"1.1s",
+    "findings":0,
+    "details":"Routine scan completed. Cookie session integrity verified. No unauthorized access attempts in log.",
+    "checkedPaths":["/api/*","/auth/*","/.env.local"]
+  },
+  {
+    "id":"scan-003",
+    "timestamp":"2026-03-24T12:00:00Z",
+    "status":"clean",
+    "duration":"0.9s",
+    "findings":0,
+    "details":"All clear. MISSION_CONTROL_PASSPHRASE env var present. Rate limiting active on auth endpoint.",
+    "checkedPaths":["/api/*","/auth/*","/.env.local"]
+  }
+]

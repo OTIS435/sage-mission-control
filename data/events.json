@@ -1,0 +1,8 @@
+[
+  {"id":"e1","title":"OR Day — Sinus Surgery Block","date":"2026-03-27","time":"07:00","type":"clinical","description":"Full OR block — FESS and septoplasty cases"},
+  {"id":"e2","title":"SnotDoc Content Recording","date":"2026-03-28","time":"18:00","type":"content","description":"Record 3 short-form videos for Instagram/TikTok"},
+  {"id":"e3","title":"AI Attending Episode 2 Recording","date":"2026-04-01","time":"19:00","type":"content","description":"Record podcast episode: 'AI tools every physician should know'"},
+  {"id":"e4","title":"Book Review Session — Daily Standard Ch. 3","date":"2026-04-03","time":"20:00","type":"writing","description":"Review and edit chapter 3 draft with Sage"},
+  {"id":"e5","title":"OR Day — Tonsil/Adenoid Cases","date":"2026-04-08","time":"07:30","type":"clinical","description":"Pediatric T&A cases"},
+  {"id":"e6","title":"Gumroad Launch — Sinusitis Guide","date":"2026-04-10","time":"09:00","type":"business","description":"Launch first ENT patient guide on Gumroad"}
+]
