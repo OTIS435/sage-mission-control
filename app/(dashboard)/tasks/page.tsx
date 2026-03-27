@@ -52,6 +52,74 @@ async function patchTask(
   }
 }
 
+// ── Linked File Viewer ─────────────────────────────────────────────────────────
+
+function LinkedFile({ filePath }: { filePath: string }) {
+  const [expanded, setExpanded] = useState(false);
+  const [content, setContent] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const name = filePath.split("/").pop() ?? filePath;
+  // Convert workspace-relative path to /api/docs/[...path] segments
+  const docHref = `/docs?file=${encodeURIComponent(filePath)}`;
+  const apiPath = `/api/docs/${filePath.split("/").join("/")}`;
+
+  async function toggle() {
+    if (expanded) { setExpanded(false); return; }
+    if (content !== null) { setExpanded(true); return; }
+    setLoading(true);
+    try {
+      const res = await fetch(apiPath);
+      const json = await res.json() as { content?: string; error?: string };
+      if (json.error) { setError(json.error); }
+      else { setContent(json.content ?? ""); setExpanded(true); }
+    } catch {
+      setError("Failed to load file");
+    } finally { setLoading(false); }
+  }
+
+  // Render markdown-ish: headings bold, ** bold, strip # symbols
+  function renderContent(raw: string) {
+    return raw.split("\n").map((line, i) => {
+      if (line.startsWith("## ")) return <p key={i} className="font-bold text-white mt-3 mb-1">{line.slice(3)}</p>;
+      if (line.startsWith("# ")) return <p key={i} className="font-bold text-emerald-400 text-sm mt-2 mb-1">{line.slice(2)}</p>;
+      if (line.startsWith("- ")) return <p key={i} className="text-zinc-300 pl-3 before:content-['•'] before:mr-2 before:text-zinc-500">{line.slice(2)}</p>;
+      if (line.trim() === "") return <div key={i} className="h-2" />;
+      return <p key={i} className="text-zinc-300">{line}</p>;
+    });
+  }
+
+  return (
+    <div className="border border-zinc-700 rounded-lg overflow-hidden">
+      <div className="flex items-center gap-2 px-3 py-2 bg-zinc-800">
+        <button
+          onClick={toggle}
+          className="flex-1 text-left flex items-center gap-2 text-xs text-zinc-300 hover:text-white transition-colors"
+          title={filePath}
+        >
+          <span className="text-zinc-500">{expanded ? "▾" : "▸"}</span>
+          <span className="font-mono">{name}</span>
+          {loading && <span className="text-zinc-500 italic">loading…</span>}
+          {error && <span className="text-red-400 italic">{error}</span>}
+        </button>
+        <a
+          href={docHref}
+          className="text-xs text-emerald-400 hover:text-emerald-300 border border-emerald-800 hover:border-emerald-600 px-2 py-0.5 rounded transition-colors whitespace-nowrap"
+          title="Open in Docs section"
+        >
+          Open in Docs →
+        </a>
+      </div>
+      {expanded && content !== null && (
+        <div className="px-4 py-3 bg-zinc-900 text-xs leading-relaxed max-h-72 overflow-y-auto space-y-0.5">
+          {renderContent(content)}
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Task Detail Modal ──────────────────────────────────────────────────────────
 
 function TaskModal({
@@ -246,15 +314,9 @@ function TaskModal({
             <label className="text-xs text-zinc-500 uppercase tracking-wider mb-2 block">
               Linked Files
             </label>
-            <div className="flex flex-wrap gap-2">
+            <div className="space-y-2">
               {local.linkedFiles.map((file, i) => (
-                <span
-                  key={i}
-                  title={file}
-                  className="text-xs bg-zinc-800 border border-zinc-700 text-zinc-300 px-2 py-1 rounded-md cursor-default"
-                >
-                  {basename(file)}
-                </span>
+                <LinkedFile key={i} filePath={file} />
               ))}
             </div>
           </div>
