@@ -1,110 +1,215 @@
-import fs from "fs";
-import path from "path";
+"use client";
 
-function readJSON(file: string) {
-  try {
-    const p = path.join(process.cwd(), "data", file);
-    return JSON.parse(fs.readFileSync(p, "utf-8"));
-  } catch {
-    return null;
+import { useState, useEffect } from "react";
+import Link from "next/link";
+
+type CronSummary = {
+  id: string; name: string;
+  nextRunAtMs: number | null;
+  lastRunAtMs: number | null;
+  lastRunStatus: string | null;
+};
+
+type InProgressTask = { id: string; title: string; project: string; priority: string };
+
+type DashData = {
+  today: string;
+  taskStats: {
+    total: number; done: number; inProgress: number; backlog: number;
+    inProgressTasks: InProgressTask[];
+  };
+  cronSummary: CronSummary[];
+  memorySnippet: string | null;
+  todayLog: string | null;
+  lastCommit: string | null;
+  secScore: number | null;
+  secStatus: string | null;
+  secTimestamp: string | null;
+};
+
+function fmtMs(ms: number | null): string {
+  if (!ms) return "—";
+  const d = new Date(ms);
+  const now = Date.now();
+  const diff = ms - now;
+  if (Math.abs(diff) < 60000) return "now";
+  if (diff > 0) {
+    const h = Math.floor(diff / 3600000);
+    const m = Math.floor((diff % 3600000) / 60000);
+    return h > 0 ? `in ${h}h ${m}m` : `in ${m}m`;
   }
+  return d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
 }
 
-export default function DashboardPage() {
-  const tasks = readJSON("tasks.json") || [];
-  const projects = readJSON("projects.json") || [];
-  const events = readJSON("events.json") || [];
-  const securityLog = readJSON("security-log.json") || [];
+function fmtDate(ms: number | null): string {
+  if (!ms) return "—";
+  return new Date(ms).toLocaleDateString("en-US", { month: "short", day: "numeric", hour: "numeric", minute: "2-digit" });
+}
 
-  const inProgress = tasks.filter((t: { status: string }) => t.status === "in-progress").length;
-  const backlog = tasks.filter((t: { status: string }) => t.status === "backlog").length;
-  const totalMRR = projects.reduce((sum: number, p: { mrr: number }) => sum + (p.mrr || 0), 0);
-  const lastScan = securityLog[0];
-  const upcomingEvents = events.slice(0, 3);
+const QUICK_LINKS = [
+  { href: "/tasks", label: "Task Board", icon: "📋" },
+  { href: "/projects", label: "Projects", icon: "🚀" },
+  { href: "/docs", label: "Docs", icon: "📄" },
+  { href: "/memories", label: "Memories", icon: "🧠" },
+  { href: "/calendar", label: "Calendar", icon: "📅" },
+  { href: "/security", label: "Security", icon: "🛡️" },
+];
+
+export default function DashboardPage() {
+  const [data, setData] = useState<DashData | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetch("/api/dashboard")
+      .then(r => r.json())
+      .then((d: DashData) => { setData(d); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  const today = data?.today ?? new Date().toISOString().slice(0, 10);
+  const dateLabel = new Date(today + "T12:00:00").toLocaleDateString("en-US", {
+    weekday: "long", month: "long", day: "numeric", year: "numeric"
+  });
+
+  const briefingJob = data?.cronSummary.find(j => j.name.includes("Morning Briefing"));
+  const backupJob = data?.cronSummary.find(j => j.name.includes("Backup"));
+  const memLogJob = data?.cronSummary.find(j => j.name.includes("Memory Log"));
 
   return (
     <div className="space-y-6">
-      <div>
-        <h2 className="text-xl font-bold text-white">Overview</h2>
-        <p className="text-zinc-400 text-sm mt-1">Good morning, Dr. Chase.</p>
+      {/* Header */}
+      <div className="flex items-start justify-between">
+        <div>
+          <h2 className="text-xl font-bold text-white">Mission Control</h2>
+          <p className="text-zinc-400 text-sm mt-1">{dateLabel}</p>
+        </div>
+        <div className="text-right text-xs text-zinc-500">
+          {data?.todayLog && <p className={data.todayLog.startsWith("✅") ? "text-emerald-400" : "text-yellow-400"}>{data.todayLog}</p>}
+        </div>
       </div>
 
-      {/* Stats */}
+      {/* Stat cards */}
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        {[
-          { label: "Total MRR", value: `$${totalMRR.toLocaleString()}`, sub: "across all projects", color: "emerald" },
-          { label: "Active Projects", value: projects.filter((p: { status: string }) => p.status === "active").length, sub: "in progress", color: "blue" },
-          { label: "Tasks In Progress", value: inProgress, sub: `${backlog} in backlog`, color: "yellow" },
-          { label: "Security Status", value: lastScan?.status === "clean" ? "Clean" : "Alert", sub: lastScan ? new Date(lastScan.timestamp).toLocaleDateString() : "No scans", color: lastScan?.status === "clean" ? "emerald" : "red" },
-        ].map((stat) => (
-          <div key={stat.label} className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-            <p className="text-zinc-400 text-xs mb-1">{stat.label}</p>
-            <p className={`text-2xl font-bold ${stat.color === "emerald" ? "text-emerald-400" : stat.color === "blue" ? "text-blue-400" : stat.color === "yellow" ? "text-yellow-400" : stat.color === "red" ? "text-red-400" : "text-white"}`}>
-              {stat.value}
-            </p>
-            <p className="text-zinc-500 text-xs mt-1">{stat.sub}</p>
-          </div>
-        ))}
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Upcoming Events */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-          <h3 className="text-white font-semibold text-sm mb-3">Upcoming Events</h3>
-          <div className="space-y-2">
-            {upcomingEvents.map((event: { id: string; title: string; date: string; time: string; type: string }) => (
-              <div key={event.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-zinc-800 transition-colors">
-                <div className="w-2 h-2 rounded-full bg-emerald-400 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm truncate">{event.title}</p>
-                  <p className="text-zinc-500 text-xs">{event.date} at {event.time}</p>
-                </div>
-                <span className="text-xs text-zinc-500 capitalize">{event.type}</span>
-              </div>
-            ))}
-          </div>
+          <p className="text-zinc-400 text-xs mb-1">Tasks Active</p>
+          <p className="text-2xl font-bold text-yellow-400">{loading ? "—" : data?.taskStats.inProgress}</p>
+          <p className="text-zinc-500 text-xs mt-1">{data?.taskStats.backlog ?? "—"} in backlog · {data?.taskStats.done ?? "—"} done</p>
         </div>
-
-        {/* Recent Tasks */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-          <h3 className="text-white font-semibold text-sm mb-3">In Progress</h3>
-          <div className="space-y-2">
-            {tasks.filter((t: { status: string }) => t.status === "in-progress").map((task: { id: string; title: string; project: string; priority: string }) => (
-              <div key={task.id} className="flex items-center gap-3 p-2 rounded-lg hover:bg-zinc-800 transition-colors">
-                <div className="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0" />
-                <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm truncate">{task.title}</p>
-                  <p className="text-zinc-500 text-xs">{task.project}</p>
-                </div>
-                <span className={`text-xs px-2 py-0.5 rounded-full ${task.priority === "high" ? "bg-red-500/10 text-red-400" : task.priority === "medium" ? "bg-yellow-500/10 text-yellow-400" : "bg-zinc-700 text-zinc-400"}`}>
-                  {task.priority}
-                </span>
-              </div>
-            ))}
-          </div>
+          <p className="text-zinc-400 text-xs mb-1">Total Tasks</p>
+          <p className="text-2xl font-bold text-blue-400">{loading ? "—" : data?.taskStats.total}</p>
+          <p className="text-zinc-500 text-xs mt-1">{data ? Math.round((data.taskStats.done / Math.max(data.taskStats.total,1))*100) : "—"}% complete</p>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <p className="text-zinc-400 text-xs mb-1">Security</p>
+          <p className={`text-2xl font-bold ${data?.secStatus === "clean" ? "text-emerald-400" : data?.secStatus ? "text-red-400" : "text-zinc-400"}`}>
+            {loading ? "—" : data?.secScore != null ? `${data.secScore}/100` : data?.secStatus ?? "—"}
+          </p>
+          <p className="text-zinc-500 text-xs mt-1">{data?.secTimestamp ? new Date(data.secTimestamp).toLocaleDateString() : "No scan data"}</p>
+        </div>
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <p className="text-zinc-400 text-xs mb-1">Revenue Target</p>
+          <p className="text-2xl font-bold text-emerald-400">$30k</p>
+          <p className="text-zinc-500 text-xs mt-1">Goal: $100k/mo · Gap: $70k</p>
         </div>
       </div>
 
-      {/* Projects MRR */}
-      <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
-        <h3 className="text-white font-semibold text-sm mb-3">Project Revenue</h3>
-        <div className="space-y-3">
-          {projects.filter((p: { target: number }) => p.target > 0).map((project: { id: string; name: string; mrr: number; target: number; category: string }) => (
-            <div key={project.id} className="flex items-center gap-4">
-              <div className="w-32 text-sm text-zinc-300 truncate">{project.name}</div>
-              <div className="flex-1">
-                <div className="h-1.5 bg-zinc-800 rounded-full overflow-hidden">
-                  <div
-                    className="h-full bg-emerald-500 rounded-full"
-                    style={{ width: `${Math.min((project.mrr / project.target) * 100, 100)}%` }}
-                  />
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Scheduled jobs */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <h3 className="text-white font-semibold text-sm mb-3">⏱ Scheduled Jobs</h3>
+          {loading ? <p className="text-zinc-500 text-xs">Loading…</p> : (
+            <div className="space-y-3">
+              {[
+                { job: briefingJob, label: "Morning Briefing" },
+                { job: memLogJob, label: "Memory Log" },
+                { job: backupJob, label: "GitHub Backup" },
+              ].map(({ job, label }) => (
+                <div key={label} className="flex items-center justify-between">
+                  <div>
+                    <p className="text-zinc-300 text-xs font-medium">{label}</p>
+                    <p className="text-zinc-500 text-xs">
+                      Last: {fmtDate(job?.lastRunAtMs ?? null)}
+                      {job?.lastRunStatus === "error" && <span className="text-red-400 ml-1">✗ error</span>}
+                      {job?.lastRunStatus === "ok" && <span className="text-emerald-400 ml-1">✓</span>}
+                    </p>
+                  </div>
+                  <div className="text-right">
+                    <p className="text-xs text-emerald-400 font-mono">{fmtMs(job?.nextRunAtMs ?? null)}</p>
+                    <p className="text-zinc-600 text-xs">next run</p>
+                  </div>
                 </div>
-              </div>
-              <div className="text-right w-32">
-                <span className="text-emerald-400 text-sm font-medium">${project.mrr}</span>
-                <span className="text-zinc-500 text-xs"> / ${project.target.toLocaleString()}</span>
-              </div>
+              ))}
+              {data?.cronSummary.filter(j =>
+                !j.name.includes("Morning Briefing") && !j.name.includes("Backup") && !j.name.includes("Memory Log")
+              ).map(j => (
+                <div key={j.id} className="flex items-center justify-between">
+                  <p className="text-zinc-400 text-xs truncate flex-1">{j.name}</p>
+                  <p className="text-xs text-zinc-500 font-mono ml-2">{fmtMs(j.nextRunAtMs)}</p>
+                </div>
+              ))}
             </div>
+          )}
+        </div>
+
+        {/* In Progress tasks */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <h3 className="text-white font-semibold text-sm mb-3">🔄 In Progress</h3>
+          <div className="space-y-2">
+            {loading ? <p className="text-zinc-500 text-xs">Loading…</p> : data?.taskStats.inProgressTasks.length === 0
+              ? <p className="text-zinc-600 text-xs">No active tasks</p>
+              : data?.taskStats.inProgressTasks.map(t => (
+                <div key={t.id} className="flex items-start gap-2 p-2 rounded-lg hover:bg-zinc-800 transition-colors">
+                  <div className="w-1.5 h-1.5 rounded-full bg-yellow-400 mt-1.5 flex-shrink-0" />
+                  <div className="flex-1 min-w-0">
+                    <p className="text-white text-xs truncate">{t.title}</p>
+                    <p className="text-zinc-500 text-xs">{t.project}</p>
+                  </div>
+                  <span className={`text-xs flex-shrink-0 ${t.priority === "high" ? "text-red-400" : t.priority === "medium" ? "text-yellow-400" : "text-zinc-500"}`}>
+                    {t.priority}
+                  </span>
+                </div>
+              ))
+            }
+          </div>
+          <Link href="/tasks" className="mt-3 block text-xs text-emerald-400 hover:text-emerald-300 transition-colors">
+            View all tasks →
+          </Link>
+        </div>
+
+        {/* Memory snippet */}
+        <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
+          <h3 className="text-white font-semibold text-sm mb-3">🧠 Today's Log</h3>
+          {loading ? <p className="text-zinc-500 text-xs">Loading…</p> : (
+            <p className="text-zinc-400 text-xs leading-relaxed">
+              {data?.memorySnippet ?? "No memory log entry yet today."}
+            </p>
+          )}
+          {data?.lastCommit && (
+            <div className="mt-3 pt-3 border-t border-zinc-800">
+              <p className="text-zinc-500 text-xs">Last backup</p>
+              <p className="text-zinc-400 text-xs font-mono truncate mt-0.5">{data.lastCommit}</p>
+            </div>
+          )}
+          <Link href="/memories" className="mt-3 block text-xs text-emerald-400 hover:text-emerald-300 transition-colors">
+            Full memory →
+          </Link>
+        </div>
+      </div>
+
+      {/* Quick links */}
+      <div>
+        <h3 className="text-white font-semibold text-sm mb-3">Quick Links</h3>
+        <div className="grid grid-cols-3 md:grid-cols-6 gap-3">
+          {QUICK_LINKS.map(l => (
+            <Link
+              key={l.href}
+              href={l.href}
+              className="bg-zinc-900 border border-zinc-800 hover:border-zinc-600 rounded-xl p-3 flex flex-col items-center gap-1.5 transition-colors group"
+            >
+              <span className="text-xl">{l.icon}</span>
+              <span className="text-xs text-zinc-400 group-hover:text-white transition-colors">{l.label}</span>
+            </Link>
           ))}
         </div>
       </div>
