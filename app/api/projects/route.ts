@@ -57,8 +57,11 @@ const PROJECT_DEFS = [
     platforms: ["Amazon KDP", "IngramSpark"],
     revenuePotential: "$10–$25/book; recurring passive income at scale",
     revenueNow: 0,
-    linkedDocs: [],
-    stats: ["Manifesto written", "Format decision pending", "60/40 Stoic/Robbins tone"],
+    linkedDocs: [
+      "knowledge/projects/daily-standard/manifesto.md",
+      "knowledge/projects/daily-standard/product-structure.md",
+    ],
+    stats: ["Manifesto written ✅", "Product structure drafted ✅", "60/40 Stoic/Robbins tone", "365 quotes list — next step", "Format decision pending: journal / book / both"],
     color: "purple",
     taskProject: "The Daily Standard",
   },
