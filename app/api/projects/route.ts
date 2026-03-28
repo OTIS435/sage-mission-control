@@ -14,6 +14,29 @@ function readJSON<T>(p: string): T | null {
 // Hard-coded project definitions wired to real data
 const PROJECT_DEFS = [
   {
+    id: "snotdoc-social",
+    name: "SnotDoc Social Media",
+    status: "active",
+    description: "TikTok/Reels/Shorts content pipeline. 15 video ideas, scripts ready to film.",
+    platforms: ["TikTok (@1SnotDoc)", "Instagram Reels", "YouTube Shorts", "X (@1SnotDoc)"],
+    revenuePotential: "$5k–$15k/post at 100k+ followers; drives traffic to guides + affiliate",
+    revenueNow: 0,
+    linkedDocs: [
+      "knowledge/projects/snotdoc-content/video-ideas.md",
+      "knowledge/projects/snotdoc-content/content-calendar.md",
+      "knowledge/projects/snotdoc-content/scripts/video-001-allergy-meds-ranked.md",
+    ],
+    stats: [
+      "15 video ideas prioritized by search volume + timing",
+      "Video 001 script: Allergy Meds Ranked ✅ ready to film",
+      "5-week content calendar: Mar 24 – Apr 27",
+      "2 videos/week target cadence",
+      "Spring allergy season = peak timing right now",
+    ],
+    color: "blue",
+    taskProject: "SnotDoc",
+  },
+  {
     id: "snotdoc",
     name: "SnotDoc",
     status: "active",
