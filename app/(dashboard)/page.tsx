@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import AnthropicUsageWidget from "@/components/anthropic-usage-widget";
 
 type CronSummary = {
   id: string; name: string;
@@ -60,10 +61,15 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("/api/dashboard")
-      .then(r => r.json())
-      .then((d: DashData) => { setData(d); setLoading(false); })
-      .catch(() => setLoading(false));
+    const load = () => {
+      fetch("/api/dashboard")
+        .then(r => r.json())
+        .then((d: DashData) => { setData(d); setLoading(false); })
+        .catch(() => setLoading(false));
+    };
+    load();
+    const interval = setInterval(load, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const today = data?.today ?? new Date().toISOString().slice(0, 10);
@@ -195,6 +201,11 @@ export default function DashboardPage() {
             Full memory →
           </Link>
         </div>
+      </div>
+
+      {/* API Usage Widget */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <AnthropicUsageWidget />
       </div>
 
       {/* Quick links */}
