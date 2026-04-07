@@ -1,6 +1,9 @@
 [
   {"id":"t1","title":"Launch SnotDoc Instagram","description":"Set up Instagram profile with first 3 posts","status":"done","project":"SnotDoc","priority":"high","createdAt":"2026-03-01"},
   {"id":"t2","title":"Write AI Attending pilot episode","description":"Script and record first episode on AI tools for physicians","status":"done","project":"The AI Attending","priority":"high","createdAt":"2026-03-05"},
+  {"id":"t14","title":"SnotDoc Video #1 — Allergy Meds Ranked","description":"Script, film, and post across TikTok/Reels/Shorts. COMPLETE.","status":"done","project":"SnotDoc","priority":"high","createdAt":"2026-03-22","completedAt":"2026-03-30"},
+  {"id":"t15","title":"SnotDoc Video #2 — Flonase vs Nasacort vs Nasonex","description":"Script, film, and post across TikTok/Reels/Shorts. COMPLETE.","status":"done","project":"SnotDoc","priority":"high","createdAt":"2026-03-27","completedAt":"2026-04-06"},
+  {"id":"t16","title":"SnotDoc Video #3 — Stop Taking Benadryl","description":"Script ✅, film ✅, post TikTok ✅ (Apr 6). Pending: Instagram (Apr 5) + YouTube Shorts (Apr 6).","status":"in-progress","project":"SnotDoc","priority":"high","createdAt":"2026-03-31","completedAt":"2026-04-12"},
   {"id":"t3","title":"Publish ENT Patient Guide: Sinusitis","description":"Create PDF guide on sinusitis for Gumroad","status":"in-progress","project":"ENT Patient Guides","priority":"medium","createdAt":"2026-03-10"},
   {"id":"t4","title":"Mission Control auth system","description":"Build passphrase-protected dashboard","status":"done","project":"Mission Control","priority":"high","createdAt":"2026-03-12"},
   {"id":"t5","title":"SnotDoc blog — 5 SEO articles","description":"Write 5 SEO-optimized articles on ENT topics","status":"in-progress","project":"SnotDoc","priority":"medium","createdAt":"2026-03-14"},
@@ -8,5 +11,8 @@
   {"id":"t7","title":"Coloring book — 10 page designs","description":"Design first 10 pages of kids coloring book","status":"backlog","project":"SnotDoc Kids Coloring Book","priority":"low","createdAt":"2026-03-16"},
   {"id":"t8","title":"Set up Gumroad storefront","description":"Create professional Gumroad profile and first product listing","status":"backlog","project":"ENT Patient Guides","priority":"medium","createdAt":"2026-03-17"},
   {"id":"t9","title":"AI Attending podcast RSS feed","description":"Set up podcast RSS and submit to Apple, Spotify","status":"backlog","project":"The AI Attending","priority":"high","createdAt":"2026-03-18"},
-  {"id":"t10","title":"Security audit — Mission Control","description":"Review auth, API routes, and data exposure","status":"backlog","project":"Mission Control","priority":"high","createdAt":"2026-03-20"}
+  {"id":"t10","title":"Security audit — Mission Control","description":"Review auth, API routes, and data exposure","status":"backlog","project":"Mission Control","priority":"high","createdAt":"2026-03-20"},
+  {"id":"t11","title":"Interview Jim Hardy","description":"Record 38-question interview session with Jim. Send audio to Sage for transcription. Interview guide saved at projects/scrub-hacks-by-jim/jim-interview-questions.docx","status":"backlog","project":"Scrub Hacks by Jim","priority":"high","createdAt":"2026-03-29"},
+  {"id":"t12","title":"Replace placeholder stories in manuscript","description":"After Jim interview, transcribe audio and replace all ⚑ placeholders with Jim's real OR stories and Gyle-isms","status":"backlog","project":"Scrub Hacks by Jim","priority":"high","createdAt":"2026-03-29"},
+  {"id":"t13","title":"Final manuscript polish + KDP publish","description":"Final edit pass, format for KDP, set up Amazon listing, publish digital + paperback","status":"backlog","project":"Scrub Hacks by Jim","priority":"medium","createdAt":"2026-03-29"}
 ]

@@ -76,5 +76,18 @@
     "color":"yellow",
     "url":"",
     "startDate":"2026-03-15"
+  },
+  {
+    "id":"p7",
+    "name":"Scrub Hacks by Jim",
+    "description":"Surgical tech wisdom book — 30 years of OR pearls from master scrub tech Jim Hardy. Written and compiled by James Hardy.",
+    "status":"active",
+    "mrr":0,
+    "target":2000,
+    "sparkline":[0,0,0,0,0,0],
+    "category":"Publishing",
+    "color":"teal",
+    "url":"",
+    "startDate":"2026-03-29"
   }
 ]
