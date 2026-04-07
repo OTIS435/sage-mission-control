@@ -50,6 +50,7 @@ function fmtDate(ms: number | null): string {
 const QUICK_LINKS = [
   { href: "/tasks", label: "Task Board", icon: "📋" },
   { href: "/projects", label: "Projects", icon: "🚀" },
+  { href: "/finances", label: "Finances", icon: "💰" },
   { href: "/docs", label: "Docs", icon: "📄" },
   { href: "/memories", label: "Memories", icon: "🧠" },
   { href: "/calendar", label: "Calendar", icon: "📅" },

@@ -17,6 +17,7 @@ import {
   Moon,
   Menu,
   LogOut,
+  Wallet,
 } from "lucide-react";
 
 const navItems = [
@@ -24,6 +25,7 @@ const navItems = [
   { href: "/tasks", label: "Task Board", icon: KanbanSquare },
   { href: "/calendar", label: "Calendar", icon: Calendar },
   { href: "/projects", label: "Projects", icon: FolderOpen },
+  { href: "/finances", label: "Finances", icon: Wallet },
   { href: "/memories", label: "Memories", icon: Brain },
   { href: "/docs", label: "Docs", icon: FileText },
   { href: "/team", label: "Team", icon: Users },
