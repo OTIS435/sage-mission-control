@@ -97,13 +97,27 @@ export default function FinancesPage() {
   const [financialData, setFinancialData] = useState<FinancialData>(DEFAULT_FINANCIAL_DATA);
   const [loading, setLoading] = useState(true);
 
-  // Load state from localStorage
+  // Load state from localStorage and fetch financial data
   useEffect(() => {
     const saved = localStorage.getItem("operation-freedom-vision");
     if (saved !== null) {
       setVisionHidden(JSON.parse(saved));
     }
-    setLoading(false);
+    
+    // Fetch financial data from FINANCES.md
+    const fetchFinancialData = async () => {
+      try {
+        const response = await fetch("/api/finances");
+        const data = await response.json();
+        setFinancialData(data);
+      } catch (error) {
+        console.error("Failed to fetch financial data:", error);
+        // Keep default values on error
+      }
+      setLoading(false);
+    };
+    
+    fetchFinancialData();
   }, []);
 
   // Save state to localStorage
