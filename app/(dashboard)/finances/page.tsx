@@ -54,15 +54,23 @@ const SUB_PROJECTS: SubProject[] = [
 type FinancialData = {
   assets: number;
   debts: number;
+  netWorth: number;
   monthlyIncome: number;
   monthlyExpenses: number;
+  debtRatio: number;
+  emergencyFund: number;
+  creditCards: number;
 };
 
 const DEFAULT_FINANCIAL_DATA: FinancialData = {
-  assets: 1500000,
-  debts: 450000,
+  assets: 4021656,
+  debts: 1932480,
+  netWorth: 2089176,
   monthlyIncome: 30000,
-  monthlyExpenses: 12000,
+  monthlyExpenses: 25600,
+  debtRatio: 47.4,
+  emergencyFund: 14357,
+  creditCards: 25660.66,
 };
 
 function maskNumber(value: number, hidden: boolean): string {
@@ -125,9 +133,9 @@ export default function FinancesPage() {
     localStorage.setItem("operation-freedom-vision", JSON.stringify(visionHidden));
   }, [visionHidden]);
 
-  const netWorth = financialData.assets - financialData.debts;
+  const netWorth = financialData.netWorth || (financialData.assets - financialData.debts);
   const monthlySurplus = financialData.monthlyIncome - financialData.monthlyExpenses;
-  const debtRatio = ((financialData.debts / financialData.assets) * 100).toFixed(1);
+  const debtRatio = financialData.debtRatio || ((financialData.debts / financialData.assets) * 100).toFixed(1);
 
   const highPriorityProjectsInProgress = SUB_PROJECTS.filter(
     (p) => p.priority === "high" && p.status === "in progress"

@@ -126,7 +126,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
               onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
               className="p-2 text-zinc-400 hover:text-white rounded-lg hover:bg-zinc-800 transition-colors"
             >
-              {theme === "dark" ? <Sun size={16} /> : <Moon size={16} />}
+              {theme === "dark" || theme === undefined ? <Sun size={16} /> : <Moon size={16} />}
             </button>
             <div className="w-8 h-8 rounded-full bg-emerald-500/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400 text-xs font-bold">
               SC
