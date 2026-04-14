@@ -1,8 +1,12 @@
 [
-  {"id":"e1","title":"OR Day — Sinus Surgery Block","date":"2026-03-27","time":"07:00","type":"clinical","description":"Full OR block — FESS and septoplasty cases"},
-  {"id":"e2","title":"SnotDoc Content Recording","date":"2026-03-28","time":"18:00","type":"content","description":"Record 3 short-form videos for Instagram/TikTok"},
-  {"id":"e3","title":"AI Attending Episode 2 Recording","date":"2026-04-01","time":"19:00","type":"content","description":"Record podcast episode: 'AI tools every physician should know'"},
-  {"id":"e4","title":"Book Review Session — Daily Standard Ch. 3","date":"2026-04-03","time":"20:00","type":"writing","description":"Review and edit chapter 3 draft with Sage"},
-  {"id":"e5","title":"OR Day — Tonsil/Adenoid Cases","date":"2026-04-08","time":"07:30","type":"clinical","description":"Pediatric T&A cases"},
-  {"id":"e6","title":"Gumroad Launch — Sinusitis Guide","date":"2026-04-10","time":"09:00","type":"business","description":"Launch first ENT patient guide on Gumroad"}
+  {"id":"ev1","title":"Mission Control Dashboard Launch","description":"7-screen MVP deployed (Dashboard, Tasks, Calendar, Projects, Memories, Docs, Team, Office)","date":"2026-03-05","type":"launch","project":"Mission Control"},
+  {"id":"ev2","title":"SnotDoc Pipeline Established","description":"Two-video-per-week cadence locked. Monday/Tue/Wed (V1) + Thu/Fri/Sat (V2) posting schedule.","date":"2026-03-31","type":"milestone","project":"SnotDoc"},
+  {"id":"ev3","title":"Video #1 Posted (Allergy Meds)","description":"Allergy Meds Ranked — TikTok, Reels, Shorts all live.","date":"2026-03-30","type":"content","project":"SnotDoc"},
+  {"id":"ev4","title":"Video #2 Posted (Nasal Sprays)","description":"Flonase vs Nasacort vs Nasonex vs Rhinocort — TikTok, Reels, Shorts all live.","date":"2026-04-03","type":"content","project":"SnotDoc"},
+  {"id":"ev5","title":"Video #3 Posted (Benadryl)","description":"Stop Taking Benadryl for Allergies — TikTok live, Reels/Shorts pending.","date":"2026-04-06","type":"content","project":"SnotDoc"},
+  {"id":"ev6","title":"Jim Hardy Interview Recorded","description":"Scrub Hacks by Jim — 38-question interview session recorded. Ready for transcription.","date":"2026-04-06","type":"milestone","project":"Scrub Hacks by Jim"},
+  {"id":"ev7","title":"Video #5 Posted (Nasal Cycle)","description":"Erectile Tissue in Your Nose (Nasal Cycle Anatomy) — TikTok live. Reels/Shorts cross-post in progress.","date":"2026-04-13","type":"content","project":"SnotDoc"},
+  {"id":"ev8","title":"Telegram DM Archive Complete","description":"709 DM messages extracted, parsed, and organized (Mar 2 - Apr 14). Comprehensive relationship history documented.","date":"2026-04-14","type":"system","project":"Mission Control"},
+  {"id":"ev9","title":"Google Drive Backup Automated","description":"Nightly backup pipeline configured: local → GitHub → Google Drive. DM archive, group chats, daily logs all synced.","date":"2026-04-14","type":"system","project":"Mission Control"},
+  {"id":"ev10","title":"Session Visibility Fixed","description":"Updated openclaw.json tools.sessions.visibility: tree → all. Now able to read all Telegram group topics.","date":"2026-04-13","type":"system","project":"Mission Control"}
 ]
