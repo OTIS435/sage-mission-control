@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import fs from "fs";
 import path from "path";
 
-const TASKS_PATH = "/Users/sageopenclaw/.openclaw/workspace/projects/tasks.json";
+const TASKS_PATH = "/Users/sageopenclaw/.openclaw/workspace/mission-control/data/tasks.json";
 
 function readTasks(): Record<string, unknown>[] {
   try {

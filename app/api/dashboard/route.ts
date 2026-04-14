@@ -12,7 +12,7 @@ function readJSON<T>(filePath: string): T | null {
 
 type Task = { id: string; title: string; status: string; project: string; priority: string };
 type CronJob = {
-  id: string; name: string;
+  id: string; name: string; enabled?: boolean;
   state?: { nextRunAtMs?: number; lastRunAtMs?: number; lastRunStatus?: string };
   schedule?: { kind: string; expr?: string };
 };
@@ -45,8 +45,8 @@ function getLastGitCommit(): string | null {
 }
 
 export async function GET() {
-  // Tasks
-  const tasks: Task[] = readJSON<Task[]>(path.join(WORKSPACE, "projects/tasks.json")) ?? [];
+  // Tasks - read from Mission Control's own data folder
+  const tasks: Task[] = readJSON<Task[]>(path.join(WORKSPACE, "mission-control/data/tasks.json")) ?? [];
   const taskStats = {
     total: tasks.length,
     done: tasks.filter(t => t.status === "done").length,
@@ -55,9 +55,9 @@ export async function GET() {
     inProgressTasks: tasks.filter(t => t.status === "in-progress"),
   };
 
-  // Cron jobs
+  // Cron jobs - only show ENABLED jobs
   const cronStore = readJSON<CronStore>(CRON_FILE);
-  const jobs: CronJob[] = cronStore?.jobs ?? [];
+  const jobs: CronJob[] = (cronStore?.jobs ?? []).filter(j => j.enabled === true);
   const cronSummary = jobs.map(j => ({
     id: j.id,
     name: j.name,

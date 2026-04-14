@@ -107,7 +107,7 @@ const PROJECT_DEFS = [
 ];
 
 export async function GET() {
-  const tasks: Task[] = readJSON<Task[]>(path.join(WORKSPACE, "projects/tasks.json")) ?? [];
+  const tasks: Task[] = readJSON<Task[]>(path.join(WORKSPACE, "mission-control/data/tasks.json")) ?? [];
   const statusMd = (() => {
     try { return fs.readFileSync(path.join(WORKSPACE, "projects/status.md"), "utf-8"); }
     catch { return null; }
