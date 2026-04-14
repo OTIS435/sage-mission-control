@@ -122,39 +122,30 @@ export default function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Scheduled jobs */}
+        {/* Scheduled jobs - sorted by next run time */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-4">
           <h3 className="text-white font-semibold text-sm mb-3">⏱ Scheduled Jobs</h3>
           {loading ? <p className="text-zinc-500 text-xs">Loading…</p> : (
-            <div className="space-y-3">
-              {[
-                { job: briefingJob, label: "Morning Briefing" },
-                { job: memLogJob, label: "Memory Log" },
-                { job: backupJob, label: "GitHub Backup" },
-              ].map(({ job, label }) => (
-                <div key={label} className="flex items-center justify-between">
-                  <div>
-                    <p className="text-zinc-300 text-xs font-medium">{label}</p>
-                    <p className="text-zinc-500 text-xs">
-                      Last: {fmtDate(job?.lastRunAtMs ?? null)}
-                      {job?.lastRunStatus === "error" && <span className="text-red-400 ml-1">✗ error</span>}
-                      {job?.lastRunStatus === "ok" && <span className="text-emerald-400 ml-1">✓</span>}
-                    </p>
+            <div className="space-y-2 max-h-64 overflow-y-auto">
+              {(data?.cronSummary ?? [])
+                .filter(j => j.nextRunAtMs !== null)
+                .sort((a, b) => (a.nextRunAtMs ?? 0) - (b.nextRunAtMs ?? 0))
+                .map(j => (
+                  <div key={j.id} className="flex items-start justify-between gap-2 pb-2 border-b border-zinc-800 last:border-0">
+                    <div className="flex-1 min-w-0">
+                      <p className="text-zinc-300 text-xs font-medium truncate">{j.name}</p>
+                      <p className="text-zinc-500 text-xs">
+                        Last: {fmtDate(j.lastRunAtMs ?? null)}
+                        {j.lastRunStatus === "error" && <span className="text-red-400 ml-1">✗</span>}
+                        {j.lastRunStatus === "ok" && <span className="text-emerald-400 ml-1">✓</span>}
+                      </p>
+                    </div>
+                    <div className="text-right flex-shrink-0">
+                      <p className="text-xs text-emerald-400 font-mono whitespace-nowrap">{fmtMs(j.nextRunAtMs)}</p>
+                      <p className="text-zinc-600 text-xs">next</p>
+                    </div>
                   </div>
-                  <div className="text-right">
-                    <p className="text-xs text-emerald-400 font-mono">{fmtMs(job?.nextRunAtMs ?? null)}</p>
-                    <p className="text-zinc-600 text-xs">next run</p>
-                  </div>
-                </div>
-              ))}
-              {data?.cronSummary.filter(j =>
-                !j.name.includes("Morning Briefing") && !j.name.includes("Backup") && !j.name.includes("Memory Log")
-              ).map(j => (
-                <div key={j.id} className="flex items-center justify-between">
-                  <p className="text-zinc-400 text-xs truncate flex-1">{j.name}</p>
-                  <p className="text-xs text-zinc-500 font-mono ml-2">{fmtMs(j.nextRunAtMs)}</p>
-                </div>
-              ))}
+                ))}
             </div>
           )}
         </div>
