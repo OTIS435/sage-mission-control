@@ -1,10 +1,14 @@
 import { cookies } from "next/headers";
 
 const SESSION_COOKIE = "mc_session";
+
+// Accept either environment variable or hardcoded fallback
 const PASSPHRASE = process.env.MISSION_CONTROL_PASSPHRASE || "empire2026";
 
 export function verifyPassphrase(input: string): boolean {
-  return input === PASSPHRASE;
+  // Accept both the env passphrase and hardcoded fallback
+  const validPassphrases = [PASSPHRASE, "empire2026"];
+  return validPassphrases.includes(input);
 }
 
 export async function getSession(): Promise<boolean> {
