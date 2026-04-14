@@ -1,12 +1,14 @@
 [
   {"id":"ev1","title":"Mission Control Dashboard Launch","description":"7-screen MVP deployed (Dashboard, Tasks, Calendar, Projects, Memories, Docs, Team, Office)","date":"2026-03-05","type":"launch","project":"Mission Control"},
   {"id":"ev2","title":"SnotDoc Pipeline Established","description":"Two-video-per-week cadence locked. Monday/Tue/Wed (V1) + Thu/Fri/Sat (V2) posting schedule.","date":"2026-03-31","type":"milestone","project":"SnotDoc"},
-  {"id":"ev3","title":"Video #1 Posted (Allergy Meds)","description":"Allergy Meds Ranked — TikTok, Reels, Shorts all live.","date":"2026-03-30","type":"content","project":"SnotDoc"},
-  {"id":"ev4","title":"Video #2 Posted (Nasal Sprays)","description":"Flonase vs Nasacort vs Nasonex vs Rhinocort — TikTok, Reels, Shorts all live.","date":"2026-04-03","type":"content","project":"SnotDoc"},
-  {"id":"ev5","title":"Video #3 Posted (Benadryl)","description":"Stop Taking Benadryl for Allergies — TikTok live, Reels/Shorts pending.","date":"2026-04-06","type":"content","project":"SnotDoc"},
+  {"id":"ev3","title":"Video #1 Posted (Allergy Meds)","description":"TikTok (Mar 30), Reels (Mar 31), Shorts (Apr 1) — all platforms live.","date":"2026-03-30","type":"content","project":"SnotDoc"},
+  {"id":"ev4","title":"Video #2 Posted (Nasal Sprays)","description":"TikTok (Apr 3), Reels (Apr 4), Shorts (Apr 5) — all platforms live.","date":"2026-04-03","type":"content","project":"SnotDoc"},
+  {"id":"ev5","title":"Video #3 Posted (Benadryl)","description":"TikTok live (Apr 6). Reels and Shorts pending.","date":"2026-04-06","type":"content","project":"SnotDoc"},
   {"id":"ev6","title":"Jim Hardy Interview Recorded","description":"Scrub Hacks by Jim — 38-question interview session recorded. Ready for transcription.","date":"2026-04-06","type":"milestone","project":"Scrub Hacks by Jim"},
-  {"id":"ev7","title":"Video #5 Posted (Nasal Cycle)","description":"Erectile Tissue in Your Nose (Nasal Cycle Anatomy) — TikTok live. Reels/Shorts cross-post in progress.","date":"2026-04-13","type":"content","project":"SnotDoc"},
+  {"id":"ev7","title":"Video #5 Posted (Nasal Cycle)","description":"TikTok (Apr 13, 6:16 AM MT), Reels (Apr 14), Shorts pending (Apr 15).","date":"2026-04-13","type":"content","project":"SnotDoc"},
   {"id":"ev8","title":"Telegram DM Archive Complete","description":"709 DM messages extracted, parsed, and organized (Mar 2 - Apr 14). Comprehensive relationship history documented.","date":"2026-04-14","type":"system","project":"Mission Control"},
   {"id":"ev9","title":"Google Drive Backup Automated","description":"Nightly backup pipeline configured: local → GitHub → Google Drive. DM archive, group chats, daily logs all synced.","date":"2026-04-14","type":"system","project":"Mission Control"},
-  {"id":"ev10","title":"Session Visibility Fixed","description":"Updated openclaw.json tools.sessions.visibility: tree → all. Now able to read all Telegram group topics.","date":"2026-04-13","type":"system","project":"Mission Control"}
+  {"id":"ev10","title":"Session Visibility Fixed","description":"Updated openclaw.json tools.sessions.visibility: tree → all. Now able to read all Telegram group topics.","date":"2026-04-13","type":"system","project":"Mission Control"},
+  {"id":"ev11","title":"Logging Protocol Documented","description":"Complete nightly capture workflow (11 PM memory → 11:30 PM GitHub → 12 AM Drive). Cost: $0.02/day. Three-way backup: local + GitHub + Drive.","date":"2026-04-14","type":"system","project":"Mission Control"},
+  {"id":"ev12","title":"Video #5 Instagram Reels Posted","description":"Erectile Tissue/Nasal Cycle posted to Instagram today. YouTube Shorts cross-post queued for Apr 15.","date":"2026-04-14","type":"content","project":"SnotDoc"}
 ]
